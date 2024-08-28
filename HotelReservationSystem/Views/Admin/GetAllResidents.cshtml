@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Resident>
+
+
+@{
+    ViewData["Title"] = "GetAllResidents";
+}
+
+<h1>GetAllResidents</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>UserName</th>
+                    <th>RoomNumber</th>
+                    <th>HotelName</th>
+                    <th>CheckIn</th>
+                    <th>CheckOut</th>
+                    <th>PriceByNight</th>
+                    <th>TotalCount</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>UserName</th>
+                    <th>RoomNumber</th>
+                    <th>HotelName</th>
+                    <th>CheckIn</th>
+                    <th>CheckOut</th>
+                    <th>PriceByNight</th>
+                    <th>TotalCount</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.user.Name</td>
+                            <td>@item.room.roomNumber</td>
+                            <td>@item.room.hotel.Name</td>
+                            <td>@item.CheckIn</td>
+                            <td>@item.CheckOut</td>
+                            <td>@item.room.PriceByNight</td>
+                            <td>
+                                @{
+                                    var daysCount = (item.CheckOut - item.CheckIn).TotalDays;
+                                    int price = (int)item.room.PriceByNight;
+                                    int totalPrice = (int)daysCount * price;
+                                }
+                                @totalPrice
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatablesSimple').DataTable();
+        });
+    </script>
+}

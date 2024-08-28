@@ -1,0 +1,71 @@
+﻿@model IEnumerable<UserTransactions>
+@{
+    ViewData["Title"] = "User TRansactions";
+    Layout = "_CustomerLayout";
+}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<h1>User TRansactions</h1>
+
+<link href="~/AdminDashboard/css/styles.css" rel="stylesheet" />
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>room Number</th>
+                    <th>Hotel Name</th>
+                    <th>Total Price</th>
+                    <th> Date </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>room Number</th>
+                    <th>Hotel Name</th>
+                    <th>Total Price</th>
+                    <th> Date </th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.user.Name</td>
+                            <td>@item.user.Email</td>
+                            <td>@item.room.roomNumber</td>
+                            <td>@item.room.hotel.Name</td>
+                            <td>@item.Price</td>
+                            <td>@item.CreatedAt</td>
+
+                        </tr>
+                    }
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="~/AdminDashboard/js/datatables-simple-demo.js"></script>
+

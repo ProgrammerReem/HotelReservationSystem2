@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Reservation>
+@{
+    ViewData["Title"] = "GetAllReservation";
+}
+
+<h1>Index Of Reservation</h1>
+<br />
+
+<br />
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Hotel Name</th>
+                    <th>User Name</th>
+                    <th>CheckIn</th>
+                    <th>CheckOut</th>
+                    <th>Difference</th>
+                    <th>Price By Night</th>
+                    <th>Total Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Hotel Name</th>
+                    <th>User Name</th>
+                    <th>CheckIn</th>
+                    <th>CheckOut</th>
+                    <th>Difference</th>
+                    <th>Price By Night</th>
+                    <th>Total Price</th>
+                    <th>Actions</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.room.roomNumber</td>
+                            <td>@item.room.hotel.Name</td>
+                            <td>@item.user.Name</td>
+                            <td>@item.CheckIn.ToShortDateString()</td>
+                            <td>@item.CheckOut.ToShortDateString()</td>
+                            <td>
+                                @{
+                                    var daysCount = (item.CheckOut - item.CheckIn).TotalDays;
+                                }
+                                <p>@daysCount</p>
+                            </td>
+                            <td>@item.room.PriceByNight</td>
+                            <td>
+                                @{
+                                    int price = (int)item.room.PriceByNight;
+                                    int totalPrice = (int)daysCount * price;
+                                }
+                                @totalPrice
+                            </td>
+                            <td>
+                                <a asp-action="Accept" asp-controller="Admin" asp-route-Id="@item.Id" class="btn btn-info">Accept</a>      || <a asp-action="Refuse" asp-controller="Admin" asp-route-Id="@item.Id" class="btn btn-danger">Refuse</a>
+                            </td>
+                        </tr>
+                    }
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+}
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatablesSimple').DataTable();
+        });
+    </script>
+}
