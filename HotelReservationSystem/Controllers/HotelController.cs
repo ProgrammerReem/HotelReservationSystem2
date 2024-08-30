@@ -118,20 +118,20 @@ namespace HotelReservationSystem.Controllers
             return View(model);
         }
 
-        public IActionResult AddRating(HotelRating ratingVM)
+        public IActionResult AddRating(HotelRating HotelRating)
         {
             //hotel 
-            var hotel = _context.hotels.FirstOrDefault(x => x.Id == ratingVM.HotelId);
+            var hotel = _context.hotels.FirstOrDefault(x => x.Id == HotelRating.HotelId);
             //count++
             hotel.Count++;
             //rating(average rating)
-            int newRating = (hotel.Rating * (hotel.Count - 1) + ratingVM.Rating) / hotel.Count;
+            int newRating = (hotel.Rating * (hotel.Count - 1) + HotelRating.Rating) / hotel.Count;
             hotel.Rating = newRating;
             // save
             _context.Update(hotel);
             _context.SaveChanges();
 
-            return RedirectToAction("Details", controllerName: "Hotel", routeValues: ratingVM.HotelId);
+            return RedirectToAction("Details", controllerName: "Hotel", routeValues: HotelRating.HotelId);
         }
 
         private string SaveImage(IFormFile file)
