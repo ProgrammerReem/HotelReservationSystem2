@@ -52,14 +52,15 @@
 
 
 
-<br />
-<hr />
 
-<h2>Monthly Benefits Report</h2>
-<form id="monthForm">
+<h2> Benefits Report</h2>
+<form method="post">
     <label for="month">Select Month:</label>
-    <input type="month"  name="month">
+    <input type="month" name="month">
+    <input type="number" name="year" for="year" placeholder="Year.." />
     <button type="submit">Filter</button>
+
+
 </form>
 
 <div class="card mb-4">
@@ -93,7 +94,6 @@
         </table>
     </div>
 </div>
-
 
 
 

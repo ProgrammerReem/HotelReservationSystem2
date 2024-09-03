@@ -168,7 +168,7 @@ namespace HotelReservationSystem.Controllers
 
         }
 
-        public IActionResult index(DateTime month)
+        public IActionResult index(DateTime month, int year)
         {
 
             #region Charts
@@ -196,42 +196,37 @@ namespace HotelReservationSystem.Controllers
             #endregion
 
             #region Tables
-            var data = _context.residents.Include(x => x.room)
-                .Where(x => x.CheckIn.Month == month.Month &&  x.CheckIn.Year == month.Year)
-                .GroupBy(b => new { b.room.hotel.Id, b.room.hotel.Name })
-                .AsEnumerable() // Switch to client-side evaluation from this point onward
-               .Select(g => new ReportDate
-               {
-                   HotelName = g.Key.Name,
-                   BenefitCount = g.Sum(b => b.room.PriceByNight * (b.CheckOut - b.CheckIn).Days)
-               })
-                .ToList();
-
-            //var data = _context.residents.Include(x => x.room)
-            //    .Where(b => b.CheckIn.Month == month.Month && b.CheckIn.Year == month.Year)
-            //    .GroupBy(b => new { b.room.hotel.Id, b.room.hotel.Name })
-            //    .AsEnumerable() // Switch to client-side evaluation from this point onward
-            //   .Select(g => new ReportDate
-            //   {
-            //       HotelName = g.Key.Name,
-            //       BenefitCount = g.Sum(b => b.room.PriceByNight * (b.CheckOut - b.CheckIn).Days)
-            //   })
-            //    .ToList();
-
-            //var data2 = _context.residents.Include(x => x.room)
-            //   .Where(b => b.CheckIn.Year == year.Year && b.CheckIn.Year == year.Year)
-            //   .GroupBy(b => new { b.room.hotel.Id, b.room.hotel.Name })
-            //   .AsEnumerable() // Switch to client-side evaluation from this point onward
-            //  .Select(g => new ReportDate
-            //  {
-            //      HotelName = g.Key.Name,
-            //      BenefitCount = g.Sum(b => b.room.PriceByNight * (b.CheckOut - b.CheckIn).Days)
-            //  })
-            //   .ToList();
+            var data = new List<ReportDate>();
 
 
+            //year != 0
+            if (year != 0)
+            {
+                data = _context.residents.Include(x => x.room)
+                           .Where(x => x.CheckIn.Year == year)
+                           .GroupBy(b => new { b.room.hotel.Id, b.room.hotel.Name })
+                           .AsEnumerable()
+                          .Select(g => new ReportDate
+                          {
+                              HotelName = g.Key.Name,
+                              BenefitCount = g.Sum(b => b.room.PriceByNight * (b.CheckOut - b.CheckIn).Days)
+                          })
+                           .ToList();
+            }
+            else
+            {
+                data = _context.residents.Include(x => x.room)
+                          .Where(x => x.CheckIn.Month == month.Month && x.CheckIn.Year == month.Year)
+                          .GroupBy(b => new { b.room.hotel.Id, b.room.hotel.Name })
+                          .AsEnumerable()
+                         .Select(g => new ReportDate
+                         {
+                             HotelName = g.Key.Name,
+                             BenefitCount = g.Sum(b => b.room.PriceByNight * (b.CheckOut - b.CheckIn).Days)
+                         })
+                          .ToList();
+            }
             #endregion
-
 
             var model = new DashboardVM()
             {
