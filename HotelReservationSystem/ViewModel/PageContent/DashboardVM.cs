@@ -7,7 +7,8 @@ namespace HotelReservationSystem.ViewModel.PageContent
         public List<RoomCreationData> roomCreations { get; set; }
         public List<HotelUserData> hotelUser { get; set; }
 
-        public List<ReportDate> reportDate { get; set; }
+        public List<ReportDate> reportDateMonth { get; set; }
+        public List<ReportDate> reportDateYear { get; set; }
     }
     public class HotelUserData
     {

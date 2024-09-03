@@ -181,7 +181,7 @@ namespace HotelReservationSystem.Controllers
             {
 
 
-                return RedirectToAction("Details", new { id = resveration.roomid, viewBagValue = "D" });
+                return RedirectToAction("Details", new { id = resveration.roomid, viewBagValue = "C" });
             }
             //valid hisory
             //min => 1-1-1

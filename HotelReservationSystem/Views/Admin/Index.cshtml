@@ -54,12 +54,14 @@
 
 <br />
 <hr />
+
 <h2>Monthly Benefits Report</h2>
 <form id="monthForm">
     <label for="month">Select Month:</label>
-    <input type="month" id="month" name="month">
+    <input type="month"  name="month">
     <button type="submit">Filter</button>
 </form>
+
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
@@ -80,7 +82,7 @@
                 </tr>
             </tfoot>
             <tbody>
-                @foreach (var item in Model.reportDate)
+                @foreach (var item in Model.reportDateMonth)
                 {
                     <tr>
                         <td>@item.HotelName</td>
@@ -93,6 +95,10 @@
 </div>
 
 
+
+
+
+
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
@@ -216,146 +222,3 @@
 }
 
 
-
-
-
-
-
-
-
-#<!-- #region name -->
-@*
-@section Scripts {
-    <!-- jQuery (necessary for DataTables and other scripts) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap Bundle JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
-    <!-- Chart.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-
-    <!-- DataTables -->
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
-
-    <!-- DataTable Initialization with PDF Export Button -->
-    <script>
-        $(document).ready(function () {
-            $('#datatablesSimple').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'copyHtml5',
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdfHtml5'
-                ]
-            });
-        });
-    </script>
-
-    <!-- Bar Chart -->
-    <script>
-        var ctx = document.getElementById("myBarChart");
-        var myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: @Html.Raw(Json.Serialize(Model.roomCreations.Select(d => d.Date.ToString("yyyy-MM-dd")))),
-                datasets: [{
-                    label: "Revenue",
-                    backgroundColor: "rgba(2,117,216,1)",
-                    borderColor: "rgba(2,117,216,1)",
-                    data: @Html.Raw(Json.Serialize(Model.roomCreations.Select(d => d.Count))),
-                }],
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        time: {
-                            unit: 'month'
-                        },
-                        gridLines: {
-                            display: false
-                        },
-                        ticks: {
-                            maxTicksLimit: 6
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: 10,
-                            maxTicksLimit: 5
-                        },
-                        gridLines: {
-                            display: true
-                        }
-                    }],
-                },
-                legend: {
-                    display: false
-                }
-            }
-        });
-    </script>
-
-    <!-- Line Chart -->
-    <script>
-        var ctx = document.getElementById("myAreaChart");
-        var myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [@Html.Raw(labels)],
-                datasets: [{
-                    label: "Users",
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(2,117,216,0.2)",
-                    borderColor: "rgba(2,117,216,1)",
-                    pointRadius: 5,
-                    pointBackgroundColor: "rgba(2,117,216,1)",
-                    pointBorderColor: "rgba(255,255,255,0.8)",
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(2,117,216,1)",
-                    pointHitRadius: 50,
-                    pointBorderWidth: 2,
-                    data: [@Html.Raw(data)],
-                }],
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        time: {
-                            unit: 'date'
-                        },
-                        gridLines: {
-                            display: false
-                        },
-                        ticks: {
-                            maxTicksLimit: 7
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: @maxUserCount,
-                            maxTicksLimit: 5
-                        },
-                        gridLines: {
-                            color: "rgba(0, 0, 0, .125)",
-                        }
-                    }],
-                },
-                legend: {
-                    display: false
-                }
-            }
-        });
-    </script>
-}
- *@
-
-<!-- #endregion -->
