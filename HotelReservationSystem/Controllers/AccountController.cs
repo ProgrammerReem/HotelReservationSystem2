@@ -154,6 +154,12 @@ namespace HotelReservationSystem.Controllers
             return View(userTransaction);
         }
 
+        public IActionResult Users()
+        {
+            var users = _context.users.ToList();
+            //
+            return View(users);
+        }
 
         private User GetUser()
         {

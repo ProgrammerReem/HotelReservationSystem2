@@ -174,7 +174,7 @@ namespace HotelReservationSystem.Controllers
             var user = GetUser();
             if (user == null)
             {
-                return RedirectToAction("Login", controllerName: "Account");
+                return RedirectToAction("Register", controllerName: "Account");
             }
             //card handle
             if (user.CardID != resveration.CardId || user.CardCVV != resveration.CardCvv)

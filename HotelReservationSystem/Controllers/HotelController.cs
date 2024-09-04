@@ -131,7 +131,7 @@ namespace HotelReservationSystem.Controllers
             _context.Update(hotel);
             _context.SaveChanges();
 
-            return RedirectToAction("Details", controllerName: "Hotel", routeValues: HotelRating.HotelId);
+            return RedirectToAction("Details", controllerName: "Hotel", routeValues: new {id=hotel.Id});
         }
 
         private string SaveImage(IFormFile file)

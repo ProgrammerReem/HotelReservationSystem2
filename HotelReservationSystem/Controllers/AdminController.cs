@@ -228,11 +228,52 @@ namespace HotelReservationSystem.Controllers
             }
             #endregion
 
+            var data3 = _context.residents.Include(x => x.room)
+        //   .Where(x => x.CheckIn.Year == year)
+        .GroupBy(b => new
+        {
+            b.room.hotel.Id,
+            b.room.hotel.Name,
+            Month = b.CheckIn.Month
+        })
+        .AsEnumerable()
+        .Select(g => new ReportDate
+        {
+            HotelName = g.Key.Name,
+            Month = g.Key.Month,
+            BenefitCount = g.Sum(b => b.room.PriceByNight * (b.CheckOut - b.CheckIn).Days)
+        })
+        .ToList();
+
+            var BookedRooms = _context.residents.Include(x => x.room).Select(x => x.room.roomNumber).Distinct().ToList();
+            var AvailableRooms = _context.room.Select(x => x.roomNumber).ToList().Except(BookedRooms).ToList();
+            var UserCount = _context.users.Count();
+
+            var data4 = _context.residents.Include(x => x.room)
+              .GroupBy(b => new
+              {
+                  b.room.hotel.Id,
+                  b.room.hotel.Name,
+                  Month = b.CheckIn.Month
+              })
+              .AsEnumerable()
+              .Select(g => new ReportDate
+              {
+                  HotelName = g.Key.Name,
+                  Month = g.Key.Month,
+                  BenefitCount = g.Sum(b => b.room.PriceByNight * (b.CheckOut - b.CheckIn).Days)
+              })
+              .ToList();
+
             var model = new DashboardVM()
             {
                 roomCreations = roomCounts,
                 hotelUser = hotelUserCounts,
                 reportDateMonth = data,
+                AvailableRoomsCount=AvailableRooms.Count,
+                BookedRoomsCount=BookedRooms.Count,
+                UserCount=UserCount,
+                ReportChart=data4
             };
 
             return View(model);
@@ -298,6 +339,7 @@ namespace HotelReservationSystem.Controllers
 
     public class ReportDate
     {
+        public int Month { get; set; }
         public string HotelName { get; set; }
         public int BenefitCount { get; set; }
     }
